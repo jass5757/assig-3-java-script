@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Order Form</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Your Pizza</h1>
+        
+        <p id="studentInfo"></p>
+        
+        <form id="pizzaForm">
+            <div class="form-group">
+                <label for="size">Choose a size:</label>
+                <select id="size" required>
+                    <option value="">Select Size</option>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
+            </div>
+
+            <fieldset class="ingredients">
+                <legend>Select your ingredients:</legend>
+                <label><input type="checkbox" value="Pepperoni"> Pepperoni</label>
+                <label><input type="checkbox" value="Mushrooms"> Mushrooms</label>
+                <label><input type="checkbox" value="Onions"> Onions</label>
+                <label><input type="checkbox" value="Sausage"> Sausage</label>
+                <label><input type="checkbox" value="Bacon"> Bacon</label>
+                <label><input type="checkbox" value="Extra Cheese"> Extra Cheese</label>
+                <label><input type="checkbox" value="Black Olives"> Black Olives</label>
+                <label><input type="checkbox" value="Green Peppers"> Green Peppers</label>
+                <label><input type="checkbox" value="Pineapple"> Pineapple</label>
+                <label><input type="checkbox" value="Spinach"> Spinach</label>
+            </fieldset>
+
+            <button type="submit">Place Order</button>
+        </form>
+
+        <h2>Your Pizza Order:</h2>
+        <div id="pizzaDescription" class="description"></div>
+    </div>
+
+    <script>
+        // Add your student ID and name here
+        document.getElementById('studentInfo').innerText = 'Student ID: 200601285, Name: Jasmin Kaur';
+
+        // Pizza class to represent a pizza order
+        class Pizza {
+            constructor(size, ingredients) {
+                this.size = size;
+                this.ingredients = ingredients;
+            }
+
+            // Method to get the pizza description
+            getDescription() {
+                const ingredientList = this.ingredients.length ? this.ingredients.join(', ') : 'no additional ingredients';
+                return `🍕 You ordered a ${this.size} pizza with ${ingredientList}. 🍕`;
+            }
+        }
+
+        // Function to handle the form submission
+        document.getElementById('pizzaForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get the selected size
+            const size = document.getElementById('size').value;
+
+            // Get the selected ingredients
+            const ingredientCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const ingredients = Array.from(ingredientCheckboxes).map(checkbox => checkbox.value);
+
+            // Create a Pizza object
+            const pizzaOrder = new Pizza(size, ingredients);
+
+            // Output the pizza description to the HTML
+            document.getElementById('pizzaDescription').innerHTML = `<p><strong>Your Pizza Order:</strong></p><p>${pizzaOrder.getDescription()}</p><p>Thank you for your order! 🍕🎉</p>`;
+            
+
+            }
+
+        );
+    </script>
+</body>
+</html>
